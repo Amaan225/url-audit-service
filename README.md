@@ -7,10 +7,10 @@ A production-ready URL auditing API built with FastAPI that analyzes websites an
 ## Live Demo
 
 **API:**  
-<PASTE_YOUR_RENDER_URL_HERE>
+(https://url-audit-service-4vj5.onrender.com/)
 
 **Swagger Docs:**  
-<PASTE_YOUR_RENDER_URL_HERE>/docs
+https://url-audit-service-4vj5.onrender.com/docs
 
 ---
 
