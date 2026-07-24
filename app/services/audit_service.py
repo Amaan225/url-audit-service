@@ -1,65 +1,44 @@
-import time
-from datetime import datetime, UTC
-from uuid import uuid4
-
-import httpx
-from bs4 import BeautifulSoup
+from app.services.cache_service import cache_service
+from app.services.website_inspector import website_inspector
+from app.services.concurrency_service import concurrency_service
 
 
 class AuditService:
-    TIMEOUT = 10
 
     async def audit(self, url: str):
-        request_id = str(uuid4())
 
-        start = time.perf_counter()
+        cache_key = f"audit:{url.lower().rstrip('/')}"
 
-        async with httpx.AsyncClient(
-            follow_redirects=True,
-            timeout=self.TIMEOUT,
-        ) as client:
+        cached = await cache_service.get(cache_key)
 
-            response = await client.get(url)
+        if cached is not None:
 
-        end = time.perf_counter()
+            cached["cached"] = True
 
-        response_time = round((end - start) * 1000, 2)
+            ttl = await cache_service.ttl(cache_key)
 
-        title = None
+            cached["cache"] = {
+                "hit": True,
+                "ttl_remaining": ttl,
+            }
 
-        if "text/html" in response.headers.get("content-type", ""):
-            soup = BeautifulSoup(response.text, "lxml")
+            return cached
 
-            if soup.title:
-                title = soup.title.text.strip()
+        async with concurrency_service.semaphore:
+            result = await website_inspector.inspect(url)
+        result["cached"] = False
 
-        security_headers = {
-            "strict_transport_security": "strict-transport-security"
-            in response.headers,
-            "content_security_policy": "content-security-policy"
-            in response.headers,
-            "x_frame_options": "x-frame-options"
-            in response.headers,
-            "x_content_type_options": "x-content-type-options"
-            in response.headers,
+        result["cache"] = {
+            "hit": False,
+            "ttl_remaining": 300,
         }
 
-        return {
-            "request_id": request_id,
-            "url": url,
-            "final_url": str(response.url),
-            "status_code": response.status_code,
-            "response_time_ms": response_time,
-            "title": title,
-            "content_type": response.headers.get("content-type"),
-            "content_length": response.headers.get("content-length"),
-            "server": response.headers.get("server"),
-            "https": str(response.url).startswith("https"),
-            "redirects": len(response.history),
-            "security_headers": security_headers,
-            "cached": False,
-            "timestamp": datetime.now(UTC).isoformat(),
-        }
+        await cache_service.set(
+            cache_key,
+            result,
+        )
+
+        return result
 
 
 audit_service = AuditService()
