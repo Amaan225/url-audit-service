@@ -1,11 +1,15 @@
 from app.services.cache_service import cache_service
 from app.services.website_inspector import website_inspector
 from app.services.concurrency_service import concurrency_service
+import time
+from copy import deepcopy
 
 
 class AuditService:
 
     async def audit(self, url: str):
+
+        api_start = time.perf_counter()
 
         cache_key = f"audit:{url.lower().rstrip('/')}"
 
@@ -13,19 +17,29 @@ class AuditService:
 
         if cached is not None:
 
-            cached["cached"] = True
+            result = deepcopy(cached)
+
+            result["cached"] = True
 
             ttl = await cache_service.ttl(cache_key)
 
-            cached["cache"] = {
+            result["cache"] = {
                 "hit": True,
                 "ttl_remaining": ttl,
             }
 
-            return cached
+            api_end = time.perf_counter()
+
+            result["api_response_time_ms"] = round(
+                (api_end - api_start) * 1000,
+                2,
+            )
+
+            return result
 
         async with concurrency_service.semaphore:
             result = await website_inspector.inspect(url)
+
         result["cached"] = False
 
         result["cache"] = {
@@ -38,7 +52,13 @@ class AuditService:
             result,
         )
 
-        return result
+        api_end = time.perf_counter()
 
+        result["api_response_time_ms"] = round(
+            (api_end - api_start) * 1000,
+            2,
+        )
+
+        return result
 
 audit_service = AuditService()
