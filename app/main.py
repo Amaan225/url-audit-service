@@ -4,7 +4,11 @@ from app.api.audit import router as audit_router
 from app.middleware.request_id import RequestIDMiddleware
 from app.api.redis_test import router as redis_router
 from app.api.cache_test import router as cache_router
+from app.middleware.rate_limit import RateLimitMiddleware
+from app.core.logging_config import setup_logging
+from app.middleware.logging import LoggingMiddleware
 
+setup_logging()
 
 app = FastAPI(
     title="URL Audit Service",
@@ -13,7 +17,9 @@ app = FastAPI(
 )
 register_exception_handlers(app)
 app.add_middleware(RequestIDMiddleware)
+app.add_middleware(RateLimitMiddleware)
 app.include_router(audit_router)
+app.add_middleware(LoggingMiddleware)
 
 app.include_router(audit_router)
 app.include_router(redis_router)

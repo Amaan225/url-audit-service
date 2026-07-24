@@ -1,11 +1,12 @@
 import json
 
 from app.services.redis_client import redis_client
+from app.core.config import settings
 
 
 class CacheService:
 
-    DEFAULT_TTL = 300
+    DEFAULT_TTL = settings.CACHE_TTL
 
     async def get(self, key: str):
 
