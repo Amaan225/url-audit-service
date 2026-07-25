@@ -173,3 +173,7 @@ Built for the Digital Heroes Software Development Assessment.
 Built for **Digital Heroes Training Task**
 
 (https://digitalheroesco.com/)
+
+## AI Usage
+
+This project was developed with AI Tools. See [AI_USAGE.md](AI_USAGE.md) for details.
