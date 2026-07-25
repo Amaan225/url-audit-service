@@ -7,6 +7,8 @@ from app.middleware.request_id import RequestIDMiddleware
 from app.middleware.rate_limit import RateLimitMiddleware
 from app.core.logging_config import setup_logging
 from app.middleware.logging import LoggingMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 setup_logging()
 
@@ -15,6 +17,13 @@ app = FastAPI(
     description="Production-grade URL Audit Service",
     version="1.0.0",
 )
+
+app.mount(
+    "/static",
+    StaticFiles(directory="frontend"),
+    name="static",
+)
+
 register_exception_handlers(app)
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(RateLimitMiddleware)
@@ -27,9 +36,7 @@ app.add_middleware(LoggingMiddleware)
 
 @app.get("/")
 async def root():
-    return {
-        "message": "URL Audit Service is running 🚀"
-    }
+    return FileResponse("frontend/index.html")
 
 
 @app.get("/health")

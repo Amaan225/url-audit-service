@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>URL Audit Service</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <h1> URL Audit Report</h1>
+
+        <p>
+            Production-grade Website Audit Tool
+        </p>
+
+    </header>
+
+    <section class="search-section">
+
+        <input
+            id="url"
+            type="text"
+            placeholder="Enter a website (e.g. google.com)"
+        >
+
+        <button
+            id="auditBtn"
+            onclick="auditURL()"
+        >
+            Generate Report
+        </button>
+
+    </section>
+
+    <div
+        id="loading"
+        class="loading hidden"
+    >
+        Analyzing website...
+    </div>
+
+    <div
+        id="error"
+        class="error hidden"
+    ></div>
+
+    <div
+        id="report"
+        class="hidden"
+    >
+
+        <!-- ================= Executive Summary ================= -->
+
+        <section class="report-section">
+
+            <h2>Executive Summary</h2>
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <h3>Status</h3>
+
+                    <span id="statusBadge" class="badge">
+                        -
+                    </span>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>Response Time</h3>
+
+                    <p id="responseTime">
+                        -
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+    <h3>API Response</h3>
+
+    <p id="apiResponseTime">
+        -
+    </p>
+
+</div>
+
+<div class="card">
+
+    <h3>Cache TTL</h3>
+
+    <p id="cacheTTL">
+        -
+    </p>
+
+</div>
+
+                <div class="card">
+
+                    <h3>Cached</h3>
+
+                    <p id="cached">
+                        -
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>HTTPS</h3>
+
+                    <p id="https">
+                        -
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= URL Information ================= -->
+
+        <section class="report-section">
+
+            <h2>URL Information</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Requested URL</td>
+
+                    <td id="requestedUrl"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Final URL</td>
+
+                    <td id="finalUrl"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Page Title</td>
+
+                    <td id="title"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Request ID</td>
+
+                    <td id="requestId"></td>
+
+                </tr>
+
+            </table>
+
+        </section>
+
+        <!-- ================= Performance ================= -->
+
+        <section class="report-section">
+
+            <h2>Performance</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Status Code</td>
+
+                    <td id="statusCode"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Response Time</td>
+
+                    <td id="responseTime2"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Server</td>
+
+                    <td id="server"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Redirects</td>
+
+                    <td id="redirects"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Content Length</td>
+
+                    <td id="contentLength"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Content Type</td>
+
+                    <td id="contentType"></td>
+
+                </tr>
+
+                                <tr>
+
+                    <td>Cache Status</td>
+
+                    <td id="cacheStatus"></td>
+
+                </tr>   
+
+            </table>
+
+        </section>
+
+       
+
+        <!-- ================= Security ================= -->
+
+        <section class="report-section">
+
+            <h2>Security Assessment</h2>
+
+            <table>
+
+                <tr>
+
+                    <td>Strict Transport Security</td>
+
+                    <td id="sts"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Content Security Policy</td>
+
+                    <td id="csp"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>X Frame Options</td>
+
+                    <td id="xframe"></td>
+
+                </tr>
+
+                <tr>
+
+                    <td>X Content Type Options</td>
+
+                    <td id="xcontent"></td>
+
+                </tr>
+
+            </table>
+
+        </section>
+
+        <!-- ================= Footer ================= -->
+
+       <section class="footer">
+
+    <p>
+        Built as part of the
+        <strong>Digital Heroes Backend Engineering Training Task</strong>
+    </p>
+
+    <p>
+        Developed by <strong>Amaan Khan</strong>
+    </p>
+
+    <p>
+        <a
+            href="https://digitalheroesco.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Digital Heroes
+        </a>
+        •
+        <a
+            href="https://github.com/Amaan225/url-audit-service"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            GitHub Repository
+        </a>
+    </p>
+
+</section>
+
+    </div>
+
+</div>
+
+<script src="/static/script.js"></script>
+
+</body>
+
+</html>

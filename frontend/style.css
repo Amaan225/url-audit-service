@@ -1,0 +1,380 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,Helvetica,sans-serif;
+}
+
+body{
+
+    background:#0f172a;
+
+    color:#f8fafc;
+
+    min-height:100vh;
+
+    padding:40px;
+}
+
+.container{
+
+    width:1100px;
+
+    max-width:100%;
+
+    margin:auto;
+
+    background:#1e293b;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+header{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    padding:40px;
+
+    text-align:center;
+}
+
+header h1{
+
+    font-size:42px;
+
+    margin-bottom:10px;
+}
+
+header p{
+
+    opacity:.9;
+
+    font-size:18px;
+}
+
+.search-section{
+
+    display:flex;
+
+    gap:15px;
+
+    padding:30px;
+
+    background:#172554;
+}
+
+.search-section input{
+
+    flex:1;
+
+    padding:16px 20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:16px;
+}
+
+.search-section button{
+
+    padding:16px 35px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#22c55e;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.search-section button:hover{
+
+    background:#16a34a;
+}
+
+.search-section button:disabled{
+
+    background:#64748b;
+
+    cursor:not-allowed;
+}
+
+.loading{
+
+    text-align:center;
+
+    padding:20px;
+
+    font-size:18px;
+
+    color:#38bdf8;
+}
+
+.error{
+
+    margin:30px;
+
+    background:#7f1d1d;
+
+    color:white;
+
+    padding:18px;
+
+    border-radius:10px;
+}
+
+.hidden{
+
+    display:none;
+}
+
+#report{
+
+    padding:35px;
+}
+
+.report-section{
+
+    margin-bottom:35px;
+}
+
+.report-section h2{
+
+    margin-bottom:20px;
+
+    color:#38bdf8;
+
+    border-left:5px solid #38bdf8;
+
+    padding-left:12px;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+}
+
+.card{
+
+    background:#0f172a;
+
+    border:1px solid #334155;
+
+    border-radius:12px;
+
+    padding:22px;
+
+    text-align:center;
+
+    transition:.2s;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+}
+
+.card h3{
+
+    color:#94a3b8;
+
+    margin-bottom:12px;
+
+    font-size:15px;
+}
+
+.card p{
+
+    font-size:22px;
+
+    font-weight:bold;
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:10px 18px;
+
+    border-radius:20px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-weight:bold;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:#0f172a;
+
+    border-radius:12px;
+
+    overflow:hidden;
+}
+
+table td{
+
+    padding:16px;
+
+    border-bottom:1px solid #334155;
+}
+
+table tr:last-child td{
+
+    border-bottom:none;
+}
+
+table td:first-child{
+
+    width:280px;
+
+    color:#94a3b8;
+
+    font-weight:bold;
+}
+
+.good{
+
+    color:#22c55e;
+
+    font-weight:bold;
+}
+
+.bad{
+
+    color:#ef4444;
+
+    font-weight:bold;
+}
+
+.warning{
+
+    color:#f59e0b;
+
+    font-weight:bold;
+}
+
+.footer{
+
+    margin-top:40px;
+
+    padding-top:25px;
+
+    border-top:1px solid #334155;
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    line-height:1.8;
+}
+
+@media(max-width:900px){
+
+    .grid{
+
+        grid-template-columns:1fr 1fr;
+    }
+
+    .search-section{
+
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+    }
+
+    header h1{
+
+        font-size:30px;
+    }
+
+    body{
+
+        padding:15px;
+    }
+
+}
+
+.badge.good{
+    background:#16a34a;
+}
+
+.badge.bad{
+    background:#dc2626;
+}
+
+.badge.warning{
+    background:#d97706;
+}
+.footer{
+
+    margin-top:45px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border-top:1px solid #334155;
+
+    color:#94a3b8;
+
+    line-height:1.8;
+
+    font-size:15px;
+}
+
+.footer strong{
+
+    color:#f8fafc;
+}
+
+.footer a{
+
+    color:#38bdf8;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.footer a:hover{
+
+    color:#60a5fa;
+
+    text-decoration:underline;
+}
