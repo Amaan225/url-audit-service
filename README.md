@@ -172,4 +172,4 @@ Built for the Digital Heroes Software Development Assessment.
 
 Built for **Digital Heroes Training Task**
 
-https://digitalheroes.co
+(https://digitalheroesco.com/)
