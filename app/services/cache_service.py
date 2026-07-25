@@ -1,6 +1,6 @@
 import json
 
-from app.services.redis_client import redis_client
+from app.services.redis_client import get_redis_client
 from app.core.config import settings
 
 
@@ -10,7 +10,7 @@ class CacheService:
 
     async def get(self, key: str):
 
-        data = await redis_client.client.get(key)
+        data = await get_redis_client().client.get(key)
 
         if data is None:
             return None
@@ -19,7 +19,7 @@ class CacheService:
 
     async def set(self, key: str, value: dict, ttl: int = DEFAULT_TTL):
 
-        await redis_client.client.set(
+        await get_redis_client().client.set(
             key,
             json.dumps(value),
             ex=ttl,
@@ -27,7 +27,7 @@ class CacheService:
 
     async def ttl(self, key: str):
 
-        return await redis_client.client.ttl(key)
+        return await get_redis_client().client.ttl(key)
 
 
 cache_service = CacheService()

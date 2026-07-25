@@ -23,4 +23,13 @@ class RedisClient:
         return await self.client.ping()
 
 
-redis_client = RedisClient()
+_redis_client = None
+
+
+def get_redis_client():
+    global _redis_client
+
+    if _redis_client is None:
+        _redis_client = RedisClient()
+
+    return _redis_client

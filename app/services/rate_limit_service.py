@@ -1,4 +1,4 @@
-from app.services.redis_client import redis_client
+from app.services.redis_client import get_redis_client
 
 
 class RateLimitService:
@@ -8,15 +8,15 @@ class RateLimitService:
 
     async def allow_request(self, key: str):
 
-        current = await redis_client.client.incr(key)
+        current = await get_redis_client().client.incr(key)
 
         if current == 1:
-            await redis_client.client.expire(
+            await get_redis_client().client.expire(
                 key,
                 self.WINDOW,
             )
 
-        ttl = await redis_client.client.ttl(key)
+        ttl = await get_redis_client().client.ttl(key)
 
         return {
             "allowed": current <= self.LIMIT,
