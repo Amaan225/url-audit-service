@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from app.main import app
+from unittest.mock import AsyncMock
 
 
 def allow(*args, **kwargs):
@@ -12,9 +13,15 @@ def allow(*args, **kwargs):
 
 def test_invalid_url(mocker):
     mocker.patch(
-        "app.middleware.rate_limit.rate_limit_service.allow_request",
-        side_effect=allow,
-    )
+    "app.middleware.rate_limit.rate_limit_service.allow_request",
+    new=AsyncMock(
+        return_value={
+            "allowed": True,
+            "remaining": 19,
+            "retry_after": 60,
+        }
+    ),
+)
 
     with TestClient(app) as client:
         response = client.post(
@@ -28,7 +35,13 @@ def test_invalid_url(mocker):
 def test_valid_url(mocker):
     mocker.patch(
         "app.middleware.rate_limit.rate_limit_service.allow_request",
-        side_effect=allow,
+        new=AsyncMock(
+            return_value={
+                "allowed": True,
+                "remaining": 19,
+                "retry_after": 60,
+            }
+        ),
     )
 
     with TestClient(app) as client:
