@@ -32,6 +32,29 @@ def test_invalid_url(mocker):
     assert response.status_code == 422
 
 
+def test_missing_url(mocker):
+
+    mocker.patch(
+        "app.middleware.rate_limit.rate_limit_service.allow_request",
+        new=AsyncMock(
+            return_value={
+                "allowed": True,
+                "remaining": 19,
+                "retry_after": 60,
+            }
+        ),
+    )
+
+    with TestClient(app) as client:
+
+        response = client.post(
+            "/audit",
+            json={}
+        )
+
+    assert response.status_code == 422
+
+
 def test_valid_url(mocker):
     mocker.patch(
         "app.services.rate_limit_service.rate_limit_service.allow_request",
